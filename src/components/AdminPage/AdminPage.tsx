@@ -1087,9 +1087,9 @@ const BrandsAdminPage = () => {
       name: brand.name,
       jargon: brand.jargon,
       semanticLabel: brand.semanticLabel,
-      heroImage: brand?.heroImage ? [{ url: brand?.heroImage?.cdnUrl, uid: brand?.heroImage?.id }] : [],
+      heroImage: brand?.heroImage ? [{ url: resolveImageUrl(brand?.heroImage?.cdnUrl), uid: brand?.heroImage?.id, name: brand?.heroImage?.name }] : [],
       heroImageId: brand?.heroImage?.id,
-      logoImage: brand?.logo ? [{ url: brand?.logo?.cdnUrl, uid: brand?.logo?.id }] : [],
+      logoImage: brand?.logo ? [{ url: resolveImageUrl(brand?.logo?.cdnUrl), uid: brand?.logo?.id, name: brand?.logo?.name }] : [],
       logoId: brand?.logo?.id,
       backgroundColor: brand.backgroundColor,
       fontType: brand.fontType,
@@ -1102,20 +1102,20 @@ const BrandsAdminPage = () => {
       story: {
         title: brand.story.title,
         description: brand.story.description,
-        images: brand.story.images.map((image) => ({ url: image.cdnUrl, uid: image.id })),
+        images: brand.story.images.map((image) => ({ url: resolveImageUrl(image.cdnUrl), uid: image.id, name: image.name })),
         imageIds: brand.story.images.map((image) => image.id),
       },
       detail: {
         title: brand?.detail?.title || '',
         description: brand?.detail?.description || '',
-        images: brand?.detail?.images?.map((image) => ({ url: image.cdnUrl, uid: image.id })) || [],
+        images: brand?.detail?.images?.map((image) => ({ url: resolveImageUrl(image.cdnUrl), uid: image.id, name: image.name })) || [],
         imageIds: brand?.detail?.images?.map((image) => image.id) || [],
       },
-      subBrands: (typeof brand.subBrands === 'string' ? JSON.parse(brand.subBrands) : brand.subBrands).map((subBrand: any) => ({
+      subBrands: ((typeof brand.subBrands === 'string' ? JSON.parse(brand.subBrands) : brand.subBrands) || []).map((subBrand: any) => ({
         websiteUrl: subBrand.websiteUrl,
-        coverImage: [{ url: subBrand.coverImage.cdnUrl, uid: subBrand.coverImage.id }],
-        coverImageId: subBrand.coverImage.id,
-        logo: [{ url: subBrand.logo.cdnUrl, uid: subBrand.logo.id }],
+        coverImage: subBrand.coverImage ? [{ url: resolveImageUrl(subBrand.coverImage.cdnUrl), uid: subBrand.coverImage.id, name: subBrand.coverImage.name }] : [],
+        coverImageId: subBrand.coverImage?.id,
+        logo: subBrand.logo ? [{ url: resolveImageUrl(subBrand.logo.cdnUrl), uid: subBrand.logo.id, name: subBrand.logo.name }] : [],
         logoId: subBrand.logo.id,
         shortDescription: subBrand.shortDescription,
       })),
@@ -1855,7 +1855,7 @@ const PressReleaseAdminPage = () => {
       title: pressRelease.title,
       brandId: pressRelease.brand.id,
       media: pressRelease.media,
-      imageId: pressRelease.image.id,
+      imageId: pressRelease.image?.id,
       image: pressRelease?.image
         ? [{ uid: pressRelease.image.id, name: pressRelease.image.name, url: resolveImageUrl(pressRelease.image.cdnUrl) }]
         : [],
@@ -2132,7 +2132,7 @@ const PromotionAdminPage = () => {
     form.setFieldsValue({
       title: promotion.title,
       brandId: promotion.brand.id,
-      imageId: promotion.image.id,
+      imageId: promotion.image?.id,
       image: promotion?.image
         ? [{ uid: promotion.image.id, name: promotion.image.name, url: resolveImageUrl(promotion.image.cdnUrl) }]
         : [],
@@ -2156,10 +2156,10 @@ const PromotionAdminPage = () => {
     delete formValues.image;
 
     const payload = {
-      ...formValues,
-      activeUntil: formValues.activeUntil.valueOf(),
-      startDate: formValues.startDate.valueOf(),
-      endDate: formValues.endDate.valueOf(),
+      ..._.omit(formValues, ['activeUntil', 'startDate', 'endDate']),
+      activeUntil: formValues.activeUntil ? dayjs(formValues.activeUntil).format('YYYY-MM-DD') : null,
+      startDate: formValues.startDate ? dayjs(formValues.startDate).format('YYYY-MM-DD') : null,
+      endDate: formValues.endDate ? dayjs(formValues.endDate).format('YYYY-MM-DD') : null,
     };
 
     let response;
@@ -2423,8 +2423,8 @@ const ProjectAdminPage = () => {
       brandId: project.brand.id,
       isFeatured: project.isFeatured,
       priority: project?.priority,
-      imageIds: project.images?.map((image) => image.id),
-      image: project?.images?.map((image) => ({ uid: image.id, name: image.name, url: resolveImageUrl(image.cdnUrl) })),
+      imageIds: project.images?.map((image) => image.id) ?? [],
+      image: project?.images?.map((image) => ({ uid: image.id, name: image.name, url: resolveImageUrl(image.cdnUrl) })) ?? [],
       location: project.location,
       date: dayjs(project.date),
       content: project.content,
@@ -2445,7 +2445,7 @@ const ProjectAdminPage = () => {
     const payload = {
       ..._.omit(formValues, 'date'),
       date: formValues.date ? dayjs(formValues.date).format('YYYY-MM-DD') : null,
-      priority: `${formValues?.priority ?? 0}`,
+      priority: formValues?.priority ?? 0,
       imageIds: formValues.imageIds ?? [],
     };
 
@@ -2569,7 +2569,7 @@ const ProjectAdminPage = () => {
       <Table
         rowKey="id"
         columns={columns}
-        dataSource={projects?.data}
+        dataSource={projects?.data ?? []}
         scroll={{ x: 'max-content' }}
         pagination={
           featuredOnly
