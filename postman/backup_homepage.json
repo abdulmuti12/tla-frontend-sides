@@ -1,0 +1,37 @@
+{
+  "meta": {
+    "method": "GET",
+    "path": "/page-data/home"
+  },
+  "success": true,
+  "statusCode": 200,
+  "data": {
+    "aboutUsDescription": "Luxury Asia Living Group is a leading authority in the world of luxury interior design and furnishings, representing renowned European brands like Gamma, Lago, Bonaldo, and Lamborghini, alongside our legacy brands Casa Italia, Polflex Office, Homelogy, Melba, and Masterpiece. Since 1995, we have delivered unparalleled quality and design innovation to homes, offices, and hospitality projects across the globe. Our commitment to elegance, functionality, and exclusivity defines our expansive portfolio and bespoke services, making us a trusted partner for professionals and discerning clients alike.",
+    "aboutUsTitle": "Orchestrates a masterpiece where architecture and interior design meet craftsmanship",
+    "catalogueDescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In vel tempus tortor, sit amet tempor arcu. Maecenas aliquam urna id felis fringilla sodales.",
+    "mainBannerDescription": "Luxury Asia Living Group brings together a collection of the world’s most exclusive furniture brands and design expertise, offering timeless elegance, exceptional craftsmanship, and bespoke services tailored to transform any space into a statement of refined luxury.",
+    "mainBannerTitle": "Redefining Opulence in Luxury Living",
+    "pressDescription": "'Stay Updated with Our Latest News and Collaborations' Uncover the most recent developments, exclusive partnerships, and upcoming launches from the Luxury Asia Living Group. Discover how we continue to shape the world of luxury interiors with timeless elegance and groundbreaking innovations.",
+    "pressTitle": "Discover our latest updates and inspiration",
+    "updatedAt": "2024-10-22T10:29:50.392Z",
+    "id": "671770d1a1e6da266199eb9b",
+    "aboutUsBannerImage": {
+      "name": "Mood Image.jpg",
+      "cdnUrl": "https://cdn.kmarshall.id/dev/6c82e7ba-7b94-491d-8a31-2d85d474b249.jpg",
+      "filePath": "dev/6c82e7ba-7b94-491d-8a31-2d85d474b249.jpg",
+      "fileType": "image",
+      "createdAt": "2024-10-22T10:29:18.529Z",
+      "updatedAt": "2024-10-22T10:29:18.529Z",
+      "id": "67177e7e9b4096a8cb9d74d4"
+    },
+    "mainBannerImage": {
+      "name": "2687_Divano_Air_Generale 1.jpg",
+      "cdnUrl": "https://cdn.kmarshall.id/dev/8769943c-14e6-4be0-8708-5a86e814716a.jpg",
+      "filePath": "dev/8769943c-14e6-4be0-8708-5a86e814716a.jpg",
+      "fileType": "image",
+      "createdAt": "2024-10-22T10:25:40.192Z",
+      "updatedAt": "2024-10-22T10:25:40.192Z",
+      "id": "67177da49b4096a8cb9d74d2"
+    }
+  }
+}

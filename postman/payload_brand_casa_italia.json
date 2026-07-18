@@ -1,0 +1,37 @@
+{
+  "name": "Casa Italia",
+  "heroImageId": "66ed207f345b91a4715c5c79",
+  "logoId": "66ed20fb345b91a4715c5cb8",
+  "story": {
+    "title": "Sophisticated and casual styled furniture",
+    "description": "Inspired by Italian furniture brand style and the sophisticated of the name, the word &apos;Casa&apos; derived from Italian or Spanish language means Home, House, or Space of Living. <br /> <br /> Casa Italia naming represents a more sophisticated and casual brand identity and furniture product style. <br/> <br/> It represents Unique, Distinctive, Familiar, Sense of Interior.",
+    "imageIds": [
+      "66ee4c1c55b5284478229d85",
+      "66ee4c2f55b5284478229d87",
+      "66ee4d1055b5284478229d89",
+      "66ee4d3255b5284478229d8b",
+      "66ee4d4e55b5284478229d8d",
+      "66ee4d5d55b5284478229d8f",
+      "66ee4b6255b5284478229d7b",
+      "66ee4b8c55b5284478229d7d",
+      "66ee4bb255b5284478229d7f",
+      "66ee4bfe55b5284478229d83"
+    ]
+  },
+  "detail": {
+    "title": "Lorem ipsum dolor sit amet adipiscing elit. Ut Volutpat,",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu ultrices sem. Ut volutpat, diam sed facilisis scelerisque",
+    "logoId": "66ee4f2d55b5284478229dc6",
+    "imageIds": [
+      "66ee4d7455b5284478229d91",
+      "66ee4d8455b5284478229d93",
+      "66ee4db555b5284478229d95",
+      "66ee4bc855b5284478229d81"
+    ]
+  },
+  "backgroundColor": "#1E1F20",
+  "fontType": "#FFFFFF",
+  "address": "Jl. Kemang Raya No.80, RT.11/RW.022, Daerah Khusus Ibukota Jakarta",
+  "phone": "+6285174193943",
+  "contactImageId": "66ee52d555b5284478229f2b"
+}

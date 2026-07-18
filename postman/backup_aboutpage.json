@@ -1,0 +1,141 @@
+{
+  "meta": {
+    "method": "GET",
+    "path": "/page-data/about-us"
+  },
+  "success": true,
+  "statusCode": 200,
+  "data": {
+    "description": "With decades of experience, we blend a rich heritage of design excellence with innovative concepts, delivering premium furniture collections and interior solutions that elevate lifestyles and set new standards in luxury living.",
+    "mission": "To provide exceptional furniture and design solutions that elevate lifestyle experiences, ensuring each product embodies opulence, innovation, and refined craftsmanship. We are dedicated to serving professionals and individuals through our comprehensive service offerings, from conceptual design to seamless project execution.",
+    "ourServiceTitle": "Comprehensive Luxury Solutions for Every Space",
+    "outServiceDescription": "From design consultation and material selection to bespoke furniture solutions and technical support, we provide end-to-end services that cater to the unique needs of each client, whether residential, commercial, or hospitality",
+    "title": "Luxury Asia Living Group: Crafting Exceptional Spaces",
+    "updatedAt": "2024-10-22T11:36:07.703Z",
+    "vision": "To lead the global luxury interior industry by redefining design languages and creating inspiring spaces that blend timeless elegance with modern functionality.",
+    "whoWeAreDescription": "Combining a heritage of luxury craftsmanship with forward-thinking innovation, we represent some of the world’s most prestigious furniture brands, offering a curated selection that redefines the art of living in style.",
+    "whoWeAreTitle": "A Legacy of Design Excellence",
+    "whyUsDescription": "As a leader in luxury furniture and design, we offer unrivaled quality, iconic styles, and personalized service, ensuring every piece and project reflects the highest standards of craftsmanship and elegance.",
+    "whyUsTitle": "Why Choose Luxury Asia Living Group?",
+    "id": "671770daa1e6da266199eb9d",
+    "banner": {
+      "name": "Mood Image (1).jpg",
+      "cdnUrl": "https://cdn.kmarshall.id/dev/b63070d8-49bd-4377-a647-3cfad0419284.jpg",
+      "filePath": "dev/b63070d8-49bd-4377-a647-3cfad0419284.jpg",
+      "fileType": "image",
+      "createdAt": "2024-10-22T10:32:32.752Z",
+      "updatedAt": "2024-10-22T10:32:32.752Z",
+      "id": "67177f409b4096a8cb9d74d8"
+    },
+    "ourServiceImages": [
+      {
+        "name": "Mood Image (2).jpg",
+        "cdnUrl": "https://cdn.kmarshall.id/dev/7c393677-1019-42ba-80e0-ab1c12cc3804.jpg",
+        "filePath": "dev/7c393677-1019-42ba-80e0-ab1c12cc3804.jpg",
+        "fileType": "image",
+        "createdAt": "2024-10-22T11:02:47.428Z",
+        "updatedAt": "2024-10-22T11:02:47.428Z",
+        "id": "671786574fbfca8170fa6b5a"
+      },
+      {
+        "name": "Mood Image (3).jpg",
+        "cdnUrl": "https://cdn.kmarshall.id/dev/d770dc05-2a0b-451c-b9dd-fc130b3581e1.jpg",
+        "filePath": "dev/d770dc05-2a0b-451c-b9dd-fc130b3581e1.jpg",
+        "fileType": "image",
+        "createdAt": "2024-10-22T11:03:00.819Z",
+        "updatedAt": "2024-10-22T11:03:00.819Z",
+        "id": "671786644fbfca8170fa6b5c"
+      },
+      {
+        "name": "Mood Image (4).jpg",
+        "cdnUrl": "https://cdn.kmarshall.id/dev/7d05a5ab-26d1-42a7-a4aa-8e77048ff2c6.jpg",
+        "filePath": "dev/7d05a5ab-26d1-42a7-a4aa-8e77048ff2c6.jpg",
+        "fileType": "image",
+        "createdAt": "2024-10-22T11:03:14.150Z",
+        "updatedAt": "2024-10-22T11:03:14.150Z"
+      },
+      {
+        "name": "Mood Image (4).jpg",
+        "cdnUrl": "https://cdn.kmarshall.id/dev/7d05a5ab-26d1-42a7-a4aa-8e77048ff2c6.jpg",
+        "filePath": "dev/7d05a5ab-26d1-42a7-a4aa-8e77048ff2c6.jpg",
+        "fileType": "image",
+        "createdAt": "2024-10-22T11:03:14.150Z",
+        "updatedAt": "2024-10-22T11:03:14.150Z"
+      }
+    ],
+    "whoWeAreImages": [
+      {
+        "name": "collov-home-design-js8AQlw71HA-unsplash 1.jpg",
+        "cdnUrl": "https://cdn.kmarshall.id/dev/710899d5-17ee-4cb5-b05b-72aabdb9434b.jpg",
+        "filePath": "dev/710899d5-17ee-4cb5-b05b-72aabdb9434b.jpg",
+        "fileType": "image",
+        "createdAt": "2024-10-22T11:05:39.670Z",
+        "updatedAt": "2024-10-22T11:05:39.670Z",
+        "id": "671787034fbfca8170fa6b8c"
+      },
+      {
+        "name": "image 3.jpg",
+        "cdnUrl": "https://cdn.kmarshall.id/dev/378bc212-fa3f-4279-b345-d4730cdcb87c.jpg",
+        "filePath": "dev/378bc212-fa3f-4279-b345-d4730cdcb87c.jpg",
+        "fileType": "image",
+        "createdAt": "2024-10-22T11:05:59.798Z",
+        "updatedAt": "2024-10-22T11:05:59.798Z",
+        "id": "671787174fbfca8170fa6b8e"
+      },
+      {
+        "name": "Frame 395640612 (1).jpg",
+        "cdnUrl": "https://cdn.kmarshall.id/dev/37c18bf3-9cca-4b14-a4f1-7941082168a6.jpg",
+        "filePath": "dev/37c18bf3-9cca-4b14-a4f1-7941082168a6.jpg",
+        "fileType": "image",
+        "createdAt": "2024-10-22T11:06:17.154Z",
+        "updatedAt": "2024-10-22T11:06:17.154Z",
+        "id": "671787294fbfca8170fa6b90"
+      },
+      {
+        "name": "motoki-tonn-CTN8RxSdiZ0-unsplash 1.jpg",
+        "cdnUrl": "https://cdn.kmarshall.id/dev/f8d15dfa-2133-4af3-81e0-643f2aa543f5.jpg",
+        "filePath": "dev/f8d15dfa-2133-4af3-81e0-643f2aa543f5.jpg",
+        "fileType": "image",
+        "createdAt": "2024-10-22T11:06:33.810Z",
+        "updatedAt": "2024-10-22T11:06:33.810Z",
+        "id": "671787394fbfca8170fa6b92"
+      },
+      {
+        "name": "jason-wang-NxAwryAbtIw-unsplash (1) 1.jpg",
+        "cdnUrl": "https://cdn.kmarshall.id/dev/ca0dd5a2-7b30-4923-a2ba-7c91ecdd9f5d.jpg",
+        "filePath": "dev/ca0dd5a2-7b30-4923-a2ba-7c91ecdd9f5d.jpg",
+        "fileType": "image",
+        "createdAt": "2024-10-22T11:06:49.918Z",
+        "updatedAt": "2024-10-22T11:06:49.918Z",
+        "id": "671787494fbfca8170fa6b94"
+      },
+      {
+        "name": "Screen Shot 2024-10-22 at 18.07.21.png",
+        "cdnUrl": "https://cdn.kmarshall.id/dev/79fca86a-bbd6-4d58-b167-10e839b41892.png",
+        "filePath": "dev/79fca86a-bbd6-4d58-b167-10e839b41892.png",
+        "fileType": "image",
+        "createdAt": "2024-10-22T11:07:36.484Z",
+        "updatedAt": "2024-10-22T11:07:36.484Z",
+        "id": "671787784fbfca8170fa6b96"
+      }
+    ],
+    "whyUsBanner": {
+      "name": "Frame 395640618.jpg",
+      "cdnUrl": "https://cdn.kmarshall.id/dev/ac10b802-61e8-478e-87dc-9b26c4b2889a.jpg",
+      "filePath": "dev/ac10b802-61e8-478e-87dc-9b26c4b2889a.jpg",
+      "fileType": "image",
+      "createdAt": "2024-10-22T10:58:38.305Z",
+      "updatedAt": "2024-10-22T10:58:38.305Z",
+      "id": "6717855e4fbfca8170fa6b56"
+    },
+    "whyUsImage": {
+      "name": "Frame 395640619.jpg",
+      "cdnUrl": "https://cdn.kmarshall.id/dev/b667abf0-3d15-4422-bf28-4efc6b0eb7f5.jpg",
+      "filePath": "dev/b667abf0-3d15-4422-bf28-4efc6b0eb7f5.jpg",
+      "fileType": "image",
+      "createdAt": "2024-10-22T10:59:00.576Z",
+      "updatedAt": "2024-10-22T10:59:00.576Z",
+      "id": "671785744fbfca8170fa6b58"
+    }
+  }
+}

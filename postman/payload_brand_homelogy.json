@@ -1,0 +1,28 @@
+{
+  "name": "Homelogy",
+  "heroImageId": "66ee579655b5284478229ff0",
+  "logoId": "66ee56db55b5284478229fee",
+  "story": {
+    "title": "We use modern design to connect people",
+    "description": "we have been recognized Internationally for creating workplace and residential furnishings that inspire, evolve, and endure.<br /><br />Today, our commitment to modern design, also our dedication to sustainable design have yielded a unique portfolio of thoughtful products that respond and adapt to changing needs",
+    "imageIds": [
+      "66ee5bf655b528447822a0de",
+      "66ee5c3a55b528447822a0e0",
+      "66ee5c5555b528447822a0e2",
+      "66ee5c7455b528447822a0e4",
+      "66ee5c8855b528447822a0e6",
+      "66ee5c9755b528447822a0e8"
+    ]
+  },
+  "detail": {
+    "title": "",
+    "description": "",
+    "logoId": "66ee4f2d55b5284478229dc6",
+    "imageIds": []
+  },
+  "backgroundColor": "#FFF4EC",
+  "fontType": "#7F533B",
+  "address": "Jakarta Design Center 1st Floor SR 09-10, Petamburan, Kec. Tanah Abang, Jakarta Pusat, DKI Jakarta",
+  "phone": "+6285174193943",
+  "contactImageId": "66ee5ccf55b528447822a0ea"
+}

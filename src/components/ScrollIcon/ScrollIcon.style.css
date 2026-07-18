@@ -1,0 +1,37 @@
+.icon-scroll {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.icon-scroll {
+  width: 16px;
+  height: 22px;
+  border: 1px solid white;
+  border-radius: 8px;
+}
+
+.icon-scroll:before {
+  content: ' ';
+  width: 2px;
+  height: 2px;
+  background: white;
+  margin-top: 2px;
+  border-radius: 50%;
+  animation-duration: 1.5s;
+  animation-iteration-count: infinite;
+  animation-name: scroll;
+}
+
+@keyframes scroll {
+  0% {
+    opacity: 1;
+  }
+  40% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
