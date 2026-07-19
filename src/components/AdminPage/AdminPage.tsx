@@ -288,15 +288,15 @@ const PageConfigAdminPage = () => {
       mainBannerTitle: homePageConfig?.data.mainBannerTitle,
       mainBannerDescription: homePageConfig?.data.mainBannerDescription,
       mainBannerImageId: homePageConfig?.data.mainBannerImage.id,
-      mainBannerImage: [
-        { url: homePageConfig?.data.mainBannerImage.cdnUrl, uid: homePageConfig?.data.mainBannerImage.id },
-      ],
+      mainBannerImage: homePageConfig?.data.mainBannerImage
+        ? [{ url: resolveImageUrl(homePageConfig?.data.mainBannerImage.cdnUrl), uid: homePageConfig?.data.mainBannerImage.id, name: homePageConfig?.data.mainBannerImage.name }]
+        : [],
       aboutUsTitle: homePageConfig?.data.aboutUsTitle,
       aboutUsDescription: homePageConfig?.data.aboutUsDescription,
       aboutUsBannerImageId: homePageConfig?.data.aboutUsBannerImage.id,
-      aboutUsBannerImage: [
-        { url: homePageConfig?.data.aboutUsBannerImage.cdnUrl, uid: homePageConfig?.data.aboutUsBannerImage.id },
-      ],
+      aboutUsBannerImage: homePageConfig?.data.aboutUsBannerImage
+        ? [{ url: resolveImageUrl(homePageConfig?.data.aboutUsBannerImage.cdnUrl), uid: homePageConfig?.data.aboutUsBannerImage.id, name: homePageConfig?.data.aboutUsBannerImage.name }]
+        : [],
       pressTitle: homePageConfig?.data.pressTitle,
       pressDescription: homePageConfig?.data.pressDescription,
       catalogueDescription: homePageConfig?.data.catalogueDescription,
@@ -311,29 +311,31 @@ const PageConfigAdminPage = () => {
       title: aboutPageConfig?.data.title,
       description: aboutPageConfig?.data.description,
       bannerId: aboutPageConfig?.data.banner.id,
-      banner: [{ url: aboutPageConfig?.data.banner.cdnUrl, uid: aboutPageConfig?.data.banner.id }],
+      banner: aboutPageConfig?.data.banner ? [{ url: resolveImageUrl(aboutPageConfig?.data.banner.cdnUrl), uid: aboutPageConfig?.data.banner.id, name: aboutPageConfig?.data.banner.name }] : [],
       whyUsTitle: aboutPageConfig?.data.whyUsTitle,
       whyUsDescription: aboutPageConfig?.data.whyUsDescription,
       whyUsBannerId: aboutPageConfig?.data.whyUsBanner.id,
-      whyUsBanner: [{ url: aboutPageConfig?.data.whyUsBanner.cdnUrl, uid: aboutPageConfig?.data.whyUsBanner.id }],
+      whyUsBanner: aboutPageConfig?.data.whyUsBanner ? [{ url: resolveImageUrl(aboutPageConfig?.data.whyUsBanner.cdnUrl), uid: aboutPageConfig?.data.whyUsBanner.id, name: aboutPageConfig?.data.whyUsBanner.name }] : [],
       whyUsImageId: aboutPageConfig?.data.whyUsImage.id,
-      whyUsImage: [{ url: aboutPageConfig?.data.whyUsImage.cdnUrl, uid: aboutPageConfig?.data.whyUsImage.id }],
+      whyUsImage: aboutPageConfig?.data.whyUsImage ? [{ url: resolveImageUrl(aboutPageConfig?.data.whyUsImage.cdnUrl), uid: aboutPageConfig?.data.whyUsImage.id, name: aboutPageConfig?.data.whyUsImage.name }] : [],
       vision: aboutPageConfig?.data.vision,
       mission: aboutPageConfig?.data.mission,
       ourServiceTitle: aboutPageConfig?.data.ourServiceTitle,
       outServiceDescription: aboutPageConfig?.data.outServiceDescription,
       ourServiceImageIds: aboutPageConfig?.data.ourServiceImages.map((image) => image.id ?? '').filter(Boolean),
-      ourServiceImages: aboutPageConfig?.data.ourServiceImages.map((image) => ({
-        url: image.cdnUrl,
+      ourServiceImages: aboutPageConfig?.data.ourServiceImages?.map((image) => ({
+        url: resolveImageUrl(image.cdnUrl),
         uid: image.id,
-      })),
+        name: image.name,
+      })) ?? [],
       whoWeAreTitle: aboutPageConfig?.data.whoWeAreTitle,
       whoWeAreDescription: aboutPageConfig?.data.whoWeAreDescription,
       whoWeAreImageIds: aboutPageConfig?.data.whoWeAreImages.map((image) => image.id ?? '').filter(Boolean),
-      whoWeAreImages: aboutPageConfig?.data.whoWeAreImages.map((image) => ({
-        url: image.cdnUrl,
+      whoWeAreImages: aboutPageConfig?.data.whoWeAreImages?.map((image) => ({
+        url: resolveImageUrl(image.cdnUrl),
         uid: image.id,
-      })),
+        name: image.name,
+      })) ?? [],
     });
 
     setEditAboutPageConfigModal(true);

@@ -19,7 +19,7 @@ import DesignerSidebar from '../DesignerSidebar/DesignerSidebar';
 import PressRelease from '../HomePage/PressRelease';
 import ArrowRight from '../Icons/ArrowRight';
 import SectionGalery from '../SectionGalery/SectionGalery';
-import { resolveLocalImage } from '~/helpers/resolveLocalImage';
+import { resolveLocalImage, resolveImageUrl } from '~/helpers/resolveLocalImage';
 
 export default function BrandPage({ semanticBrandName }: { semanticBrandName: string }) {
   const router = useRouter();
@@ -174,7 +174,7 @@ export default function BrandPage({ semanticBrandName }: { semanticBrandName: st
                 <img
                   key={image.cdnUrl}
                   className="mx-10 inline aspect-square w-[330px] object-cover"
-                  src={resolveLocalImage(image.cdnUrl, semanticBrandName)}
+                  src={resolveImageUrl(image.cdnUrl)}
                   alt={image.name}
                 />
               ))}
@@ -186,7 +186,7 @@ export default function BrandPage({ semanticBrandName }: { semanticBrandName: st
                 <img
                   key={image.cdnUrl}
                   className="mx-10 inline aspect-square w-[330px] object-cover"
-                  src={resolveLocalImage(image.cdnUrl, semanticBrandName)}
+                  src={resolveImageUrl(image.cdnUrl)}
                   alt={image.name}
                 />
               ))}
@@ -213,7 +213,7 @@ export default function BrandPage({ semanticBrandName }: { semanticBrandName: st
                 >
                   <img
                     className="w-full max-w-[150px]"
-                    src={resolveLocalImage(subBrands[subBrandIndex]?.logo?.cdnUrl, semanticBrandName)}
+                    src={resolveImageUrl(subBrands[subBrandIndex]?.logo?.cdnUrl)}
                     alt={subBrands[subBrandIndex]?.logo?.name}
                   />
                 </div>
@@ -251,7 +251,7 @@ export default function BrandPage({ semanticBrandName }: { semanticBrandName: st
               <ImageWithFade
                 className="max-h-[500px] basis-full object-cover lg:basis-3/4"
                 alt={subBrands[subBrandIndex]?.coverImage?.name ?? ''}
-                src={resolveLocalImage(subBrands[subBrandIndex]?.coverImage?.cdnUrl, semanticBrandName)}
+                src={resolveImageUrl(subBrands[subBrandIndex]?.coverImage?.cdnUrl)}
               />
             )}
           </div>
@@ -268,10 +268,10 @@ export default function BrandPage({ semanticBrandName }: { semanticBrandName: st
           {/* Galeries Stack */}
           <div className="group relative overflow-hidden whitespace-nowrap">
             <div className="inline-block w-max animate-slide-left overflow-hidden group-hover:animation-pause">
-              <SectionGalery images={brandDetail?.story?.images.slice(0, 6).map((image) => resolveLocalImage(image.cdnUrl, semanticBrandName))} />
+              <SectionGalery images={brandDetail?.story?.images.slice(0, 6).map((image) => resolveImageUrl(image.cdnUrl))} />
             </div>
             <div className="inline-block w-max animate-slide-left overflow-hidden group-hover:animation-pause">
-              <SectionGalery images={brandDetail?.story?.images.slice(0, 6).map((image) => resolveLocalImage(image.cdnUrl, semanticBrandName))} />
+              <SectionGalery images={brandDetail?.story?.images.slice(0, 6).map((image) => resolveImageUrl(image.cdnUrl))} />
             </div>
           </div>
         </div>
@@ -306,7 +306,6 @@ export default function BrandPage({ semanticBrandName }: { semanticBrandName: st
       <PressRelease
         brandId={brandDetail?.id}
         showCta={false}
-        brandSemanticLabel={semanticBrandName}
         style={{
           backgroundColor: config.rawColor.bg,
           color: config.rawColor.text,

@@ -16,7 +16,7 @@ import SectionTitle from '~/components/PageSection/SectionTitle';
 import PressReleaseItem from '~/components/PressRelease/PressReleaseItem';
 
 import { FetchPressReleasesResponse } from '~/types/fetchPressReleasesApi';
-import { resolveLocalImage } from '~/helpers/resolveLocalImage';
+import { resolveImageUrl } from '~/helpers/resolveLocalImage';
 
 export default function PressRelease({
   brandId,
@@ -25,7 +25,6 @@ export default function PressRelease({
   showCta = true,
   pressTitle,
   pressDescription,
-  brandSemanticLabel,
 }: {
   brandId?: string;
   className?: string;
@@ -33,7 +32,6 @@ export default function PressRelease({
   showCta?: boolean;
   pressTitle?: string;
   pressDescription?: string;
-  brandSemanticLabel?: string;
 }) {
   const router = useRouter();
   const { config } = useColorConfigStore();
@@ -80,7 +78,7 @@ export default function PressRelease({
             <PressReleaseItem
               key={index}
               id={item.id}
-              image={resolveLocalImage(item.image.cdnUrl, brandSemanticLabel)}
+              image={resolveImageUrl(item.image.cdnUrl)}
               title={item.title}
               subTitle={`${new Date(item.createdAt).toLocaleDateString()}`}
               brand={item.brand.name}
