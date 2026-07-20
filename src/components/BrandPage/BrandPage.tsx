@@ -344,7 +344,7 @@ const DesignerCarousel = ({
           key={index}
           onClick={() => onClickDesigner(index)}
           className={twMerge(
-            'relative h-[660px] w-[330px] flex-shrink-0 cursor-pointer bg-cover p-10 overflow-hidden',
+            'relative h-[660px] w-[493px] flex-shrink-0 cursor-pointer bg-cover p-10 overflow-hidden',
             `group/designer`,
           )}
         >
