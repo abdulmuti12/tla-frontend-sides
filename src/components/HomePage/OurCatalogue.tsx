@@ -62,7 +62,7 @@ export default function OurCatalogue({ catalogueDescription }: { catalogueDescri
           <CatalogueItem
             key={index}
             image={item.image.cdnUrl}
-            brand={item.brand.name}
+            brand={item.brand?.name ?? '-'}
             downloadUrl={item.content.cdnUrl}
           />
         ))}
