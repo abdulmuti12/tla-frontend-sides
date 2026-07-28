@@ -1140,8 +1140,8 @@ const BrandsAdminPage = () => {
     if (formValues.story) delete formValues.story.images;
     if (formValues.detail) delete formValues.detail.images;
 
-    if (!formValues.story) formValues.story = { title: '', description: '', imageIds: [] };
-    if (!formValues.detail) formValues.detail = { title: '', description: '', imageIds: [] };
+    if (!formValues.story) formValues.story = { title: '', description: '', images: [], imageIds: [] };
+    if (!formValues.detail) formValues.detail = { title: '', description: '', images: [], imageIds: [] };
 
     formValues.primaryColor = formValues?.primaryColor
       ? typeof formValues?.primaryColor === 'string'
