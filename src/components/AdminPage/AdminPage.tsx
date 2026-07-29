@@ -2095,7 +2095,10 @@ const PressReleaseAdminPage = () => {
 const resolveImageUrl = (cdnUrl?: string) => {
   if (!cdnUrl) return '';
   if (/^https?:\/\//i.test(cdnUrl)) return cdnUrl;
-  const apiHost = process.env.API_HOST || '';
+  // API_HOST includes the global /api prefix (e.g. https://api.x.com/api), but
+  // /static/* paths are served at the host root. Strip a trailing /api so the
+  // resolved URL points at the static endpoint rather than /api/static (404).
+  const apiHost = (process.env.NEXT_PUBLIC_API_HOST || process.env.API_HOST || '').replace(/\/api$/, '');
   return `${apiHost}${cdnUrl.startsWith('/') ? '' : '/'}${cdnUrl}`;
 };
 
