@@ -1,0 +1,8 @@
+2026-07-28 12:53:31: (node:9620) [DEP0060] DeprecationWarning: The `util._extend` API is deprecated. Please use Object.assign() instead.
+2026-07-28 12:53:31: (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-07-29 05:03:42: (node:66713) [DEP0060] DeprecationWarning: The `util._extend` API is deprecated. Please use Object.assign() instead.
+2026-07-29 05:03:42: (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-07-29 05:05:13: (node:67207) [DEP0060] DeprecationWarning: The `util._extend` API is deprecated. Please use Object.assign() instead.
+2026-07-29 05:05:13: (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-07-29 05:08:28: (node:67597) [DEP0060] DeprecationWarning: The `util._extend` API is deprecated. Please use Object.assign() instead.
+2026-07-29 05:08:28: (Use `node --trace-deprecation ...` to show where the warning was created)
