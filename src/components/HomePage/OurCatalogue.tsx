@@ -11,6 +11,8 @@ import SectionQuote from '~/components/PageSection/SectionQuote';
 
 import { FetchCatalogueResponse } from '~/types/FetchCatalogue';
 
+import { resolveImageUrl } from '~/helpers/resolveLocalImage';
+
 // const catalogueItems = [
 //   {
 //     image: "/assets/catalogue_tla/casa_italia.jpeg",
@@ -61,9 +63,9 @@ export default function OurCatalogue({ catalogueDescription }: { catalogueDescri
         {catalogueItems.map((item, index) => (
           <CatalogueItem
             key={index}
-            image={item.image.cdnUrl}
+            image={resolveImageUrl(item.image.cdnUrl)}
             brand={item.brand?.name ?? '-'}
-            downloadUrl={item.content.cdnUrl}
+            downloadUrl={resolveImageUrl(item.content.cdnUrl)}
           />
         ))}
       </div>

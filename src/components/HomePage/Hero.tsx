@@ -7,10 +7,11 @@ export default function Hero({
   mainBannerDescription?: string;
   mainBannerImage?: string;
 }) {
+  const bannerSrc = mainBannerImage && mainBannerImage.length > 0 ? mainBannerImage : '/assets/2687_Divano_Air_Generale_1.png';
   return (
     <div
       className="relative flex h-[100vh] w-full flex-col gap-2 px-3 py-6 text-white md:gap-8 bg-cover bg-center"
-      style={{ backgroundImage: `url(${mainBannerImage ?? '/assets/2687_Divano_Air_Generale_1.png'})` }}
+      style={{ backgroundImage: `url(${bannerSrc})` }}
     >
       <div className="absolute inset-0 rounded-full bg-black opacity-10 blur-3xl"></div>
       <span className="relative z-10 mx-8 mt-24 overflow-visible font-serif text-[12vw] font-medium leading-none lg:mx-32 lg:text-[100px] lg:leading-[67.5px]">

@@ -8,18 +8,13 @@ import { fetchBrands } from '~/api_helpers/fetchBrands';
 import { useColorConfigStore } from '~/store/color-config-store';
 
 import { isGoodContrastToBlack } from '~/hooks/contrastUtils';
+import { resolveImageUrl } from '~/helpers/resolveLocalImage';
 
 import { FetchBrandsApiResponse } from '~/types/fetchBrandsApi';
 
 import ArrowRight from '../Icons/ArrowRight';
 
 export default function BrandGrid({ clickBrandEffect }: { clickBrandEffect?: (brandId: string) => void }) {
-  const resolveImageUrl = (cdnUrl?: string) => {
-    if (!cdnUrl) return '';
-    if (/^https?:\/\//i.test(cdnUrl)) return cdnUrl;
-    const apiHost = process.env.API_HOST || '';
-    return `${apiHost}${cdnUrl.startsWith('/') ? '' : '/'}${cdnUrl}`;
-  };
 
   const router = useRouter();
   const pathname = usePathname();

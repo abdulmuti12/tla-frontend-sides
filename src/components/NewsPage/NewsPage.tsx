@@ -16,13 +16,7 @@ import { ProjectApiResponse } from '~/types/ProjectApi';
 
 import ImageWithFade from '../Animation/ImageWithFade';
 import ArrowRight from '../Icons/ArrowRight';
-
-const resolveImageUrl = (cdnUrl?: string) => {
-  if (!cdnUrl) return '';
-  if (/^https?:\/\//i.test(cdnUrl)) return cdnUrl;
-  const apiHost = process.env.API_HOST || '';
-  return `${apiHost}${cdnUrl.startsWith('/') ? '' : '/'}${cdnUrl}`;
-};
+import { resolveImageUrl } from '~/helpers/resolveLocalImage';
 
 
 export default function NewsPage() {

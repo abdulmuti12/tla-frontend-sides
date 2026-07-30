@@ -349,7 +349,7 @@ const DesignerCarousel = ({
           )}
         >
           <div
-            style={{ backgroundImage: `url(${item?.image?.cdnUrl})` }}
+            style={{ backgroundImage: `url(${resolveImageUrl(item?.image?.cdnUrl)})` }}
             className="absolute group-hover/designer:scale-105 inset-0 z-0 bg-cover transition-all duration-300"
           ></div>
           <div className="absolute inset-0 z-0 bg-gradient-to-t from-black/50 to-transparent"></div>

@@ -45,6 +45,7 @@ import { fetchPromotionsApi } from '~/api_helpers/fetchPromotionsApi';
 import { getAPIKey } from '~/api_helpers/getAPiKey';
 
 import TLALogoMini from '~/components/Icons/TLALogoMini';
+import { resolveImageUrl } from '~/helpers/resolveLocalImage';
 
 import { FetchBrandsApiResponse } from '~/types/fetchBrandsApi';
 import { FetchCatalogueResponse } from '~/types/FetchCatalogue';
@@ -2092,15 +2093,6 @@ const PressReleaseAdminPage = () => {
   );
 };
 
-const resolveImageUrl = (cdnUrl?: string) => {
-  if (!cdnUrl) return '';
-  if (/^https?:\/\//i.test(cdnUrl)) return cdnUrl;
-  // API_HOST includes the global /api prefix (e.g. https://api.x.com/api), but
-  // /static/* paths are served at the host root. Strip a trailing /api so the
-  // resolved URL points at the static endpoint rather than /api/static (404).
-  const apiHost = (process.env.NEXT_PUBLIC_API_HOST || process.env.API_HOST || '').replace(/\/api$/, '');
-  return `${apiHost}${cdnUrl.startsWith('/') ? '' : '/'}${cdnUrl}`;
-};
 
 const PromotionAdminPage = () => {
   const [form] = Form.useForm<{
@@ -2421,7 +2413,6 @@ const ProjectAdminPage = () => {
 
   const onClickEdit = (project: ProjectApiResponse['data'][number]) => {
     setSelectedProject(project);
-    setEditModalOpen(true);
 
     setContent(project.content);
 
@@ -2437,6 +2428,7 @@ const ProjectAdminPage = () => {
       date: dayjs(project.date),
       content: project.content,
     });
+    setEditModalOpen(true);
   };
 
   const onCancelEdit = () => {

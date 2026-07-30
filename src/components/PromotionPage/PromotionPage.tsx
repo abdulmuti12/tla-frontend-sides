@@ -9,26 +9,7 @@ import { fetchPromotionById } from '~/api_helpers/fetchPromotionById';
 
 import { FetchPromotionByIdApiResponse } from '~/types/fetchPromotionById';
 
-const resolveImageUrl = (cdnUrl?: string) => {
-  if (!cdnUrl) return '';
-  if (/^https?:\/\//i.test(cdnUrl)) return cdnUrl;
-  const apiHost = process.env.API_HOST || '';
-  return `${apiHost}${cdnUrl.startsWith('/') ? '' : '/'}${cdnUrl}`;
-};
-
-// Rewrite <img src="..."> inside an HTML string so relative URLs (e.g. "/static/...")
-// get prefixed with the API host. Keeps absolute URLs and non-img tags untouched.
-const rewriteHtmlImageUrls = (html: string) => {
-  if (!html) return '';
-  const apiHost = process.env.API_HOST || '';
-  return html.replace(/<img\b([^>]*?)\bsrc=("([^"]*)"|'([^']*)')/gi, (match, attrs, _quote, dq, sq) => {
-    const src = dq ?? sq ?? '';
-    if (!src || /^https?:\/\//i.test(src) || src.startsWith('data:')) return match;
-    const absolute = `${apiHost}${src.startsWith('/') ? '' : '/'}${src}`;
-    const replacement = `"${absolute}"`;
-    return `<img${attrs}src=${dq !== undefined ? replacement : `'${absolute}'`}`;
-  });
-};
+import { resolveImageUrl, rewriteHtmlImageUrls } from '~/helpers/resolveLocalImage';
 
 export default function PromotionPage({ promotionId }: { promotionId: string }) {
   const [promotion, setPromotion] = useState<FetchPromotionByIdApiResponse['data']>();

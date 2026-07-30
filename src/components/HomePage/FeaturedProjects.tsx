@@ -11,6 +11,8 @@ import ArrowRight from '~/components/Icons/ArrowRight';
 
 import { FeaturedProjectApiResponse } from '~/types/FeaturedProjectApi';
 
+import { resolveImageUrl } from '~/helpers/resolveLocalImage';
+
 export default function FeaturedProjects() {
   const router = useRouter();
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -96,7 +98,7 @@ export default function FeaturedProjects() {
             <ImageWithFade
               direction={fadeDirection}
               className="w-full object-cover grayscale transition-all duration-300 hover:grayscale-0 lg:h-[496px] lg:w-[453px]"
-              src={featuredProjects[currentIndex]?.images?.[0]?.cdnUrl ?? ''}
+              src={resolveImageUrl(featuredProjects[currentIndex]?.images?.[0]?.cdnUrl)}
               alt={featuredProjects[currentIndex]?.images?.[0]?.name ?? ''}
             />
           )}
@@ -107,7 +109,7 @@ export default function FeaturedProjects() {
             <ImageWithFade
               direction={fadeDirection}
               className="w-full object-cover grayscale transition-all duration-300 hover:grayscale-0 lg:h-[496px] lg:w-[373px]"
-              src={featuredProjects[currentIndex]?.images?.[1]?.cdnUrl ?? ''}
+              src={resolveImageUrl(featuredProjects[currentIndex]?.images?.[1]?.cdnUrl)}
               alt={featuredProjects[currentIndex]?.images?.[1]?.name ?? ''}
             />
           )}

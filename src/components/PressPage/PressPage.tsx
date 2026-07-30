@@ -10,25 +10,7 @@ import { fetchPressById } from '~/api_helpers/fetchPressById';
 
 import { FetchPressByIdApiResponse } from '~/types/fetchPressById';
 
-const resolveImageUrl = (cdnUrl?: string) => {
-  if (!cdnUrl) return '';
-  if (/^https?:\/\//i.test(cdnUrl)) return cdnUrl;
-  const apiHost = process.env.API_HOST || '';
-  return `${apiHost}${cdnUrl.startsWith('/') ? '' : '/'}${cdnUrl}`;
-};
-
-// Rewrite <img src="..."> inside an HTML string so relative URLs get prefixed with API_HOST.
-const rewriteHtmlImageUrls = (html: string) => {
-  if (!html) return '';
-  const apiHost = process.env.API_HOST || '';
-  return html.replace(/<img\b([^>]*?)\bsrc=("([^"]*)"|'([^']*)')/gi, (match, attrs, _quote, dq, sq) => {
-    const src = dq ?? sq ?? '';
-    if (!src || /^https?:\/\//i.test(src) || src.startsWith('data:')) return match;
-    const absolute = `${apiHost}${src.startsWith('/') ? '' : '/'}${src}`;
-    const replacement = `"${absolute}"`;
-    return `<img${attrs}src=${dq !== undefined ? replacement : `'${absolute}'`}`;
-  });
-};
+import { resolveImageUrl, rewriteHtmlImageUrls } from '~/helpers/resolveLocalImage';
 
 export default function PressPage({ pressId }: { pressId: string }) {
   const [press, setPress] = useState<FetchPressByIdApiResponse['data']>();

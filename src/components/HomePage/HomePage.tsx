@@ -9,6 +9,7 @@ import OurCatalogue from '~/components/HomePage/OurCatalogue';
 import OurClients from '~/components/HomePage/OurClients';
 import PressRelease from '~/components/HomePage/PressRelease';
 import WhoWeAre from '~/components/HomePage/WhoWeAre';
+import { resolveImageUrl } from '~/helpers/resolveLocalImage';
 
 export default function HomePage() {
   const { homepageConfig } = useHomepageConfigStore();
@@ -19,12 +20,12 @@ export default function HomePage() {
     <main className="min-h-screen">
       <Hero
         mainBannerDescription={data.mainBannerDescription}
-        mainBannerImage={data.mainBannerImage?.localUrl}
+        mainBannerImage={resolveImageUrl(data.mainBannerImage?.localUrl)}
       />
       <WhoWeAre
         aboutUsTitle={data.aboutUsTitle}
         aboutUsDescription={data.aboutUsDescription}
-        aboutUsImage={data.aboutUsBannerImage?.localUrl}
+        aboutUsImage={resolveImageUrl(data.aboutUsBannerImage?.localUrl)}
       />
       <OurBrands />
       <FeaturedProjects />

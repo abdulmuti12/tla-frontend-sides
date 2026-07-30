@@ -9,6 +9,7 @@ import SectionDesc from '../PageSection/SectionDesc';
 import SectionQuote from '../PageSection/SectionQuote';
 import SectionTitle from '../PageSection/SectionTitle';
 import SectionGalery from '../SectionGalery/SectionGalery';
+import { resolveImageUrl } from '~/helpers/resolveLocalImage';
 
 export default function AboutPage() {
   const [aboutPageConfig, setAboutPageConfig] = useState<FetchAboutPageConfigApiResponse | null>(null);
@@ -48,7 +49,7 @@ export default function AboutPage() {
       {/* Hero Image */}
       <img
         className="w-full aspect-[1440/490] object-cover"
-        src={aboutPageConfig?.data?.banner?.cdnUrl ?? '/assets/about_me_hero.png'}
+        src={resolveImageUrl(aboutPageConfig?.data?.banner?.cdnUrl) || '/assets/about_me_hero.png'}
         alt="About"
       />
 
@@ -75,7 +76,7 @@ export default function AboutPage() {
               ></div>
               <img
                 className="aspect-square object-cover"
-                src={aboutPageConfig?.data?.whyUsImage?.cdnUrl ?? '/assets/about_tla_person.png'}
+                src={resolveImageUrl(aboutPageConfig?.data?.whyUsImage?.cdnUrl) || '/assets/about_tla_person.png'}
                 alt="TLA office"
               />
             </div>
@@ -84,7 +85,7 @@ export default function AboutPage() {
           <div className="basis-2/5">
             <img
               className="aspect-[504/569] object-cover h-full"
-              src={aboutPageConfig?.data?.whyUsBanner?.cdnUrl ?? '/assets/about_tla_building.png'}
+              src={resolveImageUrl(aboutPageConfig?.data?.whyUsBanner?.cdnUrl) || '/assets/about_tla_building.png'}
               alt="TlA Building"
             />
           </div>

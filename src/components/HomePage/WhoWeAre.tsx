@@ -21,6 +21,7 @@ export default function WhoWeAre({
   aboutUsImage?: string;
 }) {
   const router = useRouter();
+  const aboutImg = aboutUsImage && aboutUsImage.length > 0 ? aboutUsImage : '/assets/2701_Divano_Hero_Generale_1.png';
   return (
     <>
       <SectionContainer>
@@ -48,7 +49,7 @@ export default function WhoWeAre({
       </SectionContainer>
       <img
         className="w-full aspect-[1452/343] object-cover"
-        src={aboutUsImage ?? '/assets/2701_Divano_Hero_Generale_1.png'}
+        src={aboutImg}
         alt="who we are section image"
       />
     </>

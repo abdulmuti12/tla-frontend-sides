@@ -58,7 +58,7 @@ const locations = [
     address: 'Jl. Kemang Raya No.80, RT.11/RW.022, Daerah Khusus Ibukota Jakarta 12730',
     phoneText: '+62 851-7418-9869',
     phoneLink: 'tel:+6285174189869',
-    logo: '/assets/brand_logo/Casa_Italia.png',
+    logo: '/assets/brand_logo/casa_italia.png',
     background: '/assets/locations/casa_italia.png',
   },
   {
