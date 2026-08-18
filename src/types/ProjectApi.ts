@@ -16,10 +16,19 @@ export interface ProjectApiResponse {
     createdAt: string;
     updatedAt: string;
     id: string;
+    type?: 'Text' | '360';
     brand: {
       name: string;
       heroImageId: string;
       logoId: string;
+      backgroundColor: string;
+      fontType: string;
+      address: string;
+      phone: string;
+      contactImageId: string;
+      createdAt: string;
+      updatedAt: string;
+      id: string;
       story: {
         title: string;
         description: string;
@@ -37,14 +46,6 @@ export interface ProjectApiResponse {
         updatedAt: string;
         id: string;
       };
-      backgroundColor: string;
-      fontType: string;
-      address: string;
-      phone: string;
-      contactImageId: string;
-      createdAt: string;
-      updatedAt: string;
-      id: string;
     };
     images?: Array<{
       name: string;

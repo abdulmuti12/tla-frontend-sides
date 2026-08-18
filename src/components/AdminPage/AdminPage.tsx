@@ -53,6 +53,7 @@ import { FetchDesignerByBrandIdResponse } from '~/types/fetchDesignerByBrandId';
 import { FetchPressReleasesResponse } from '~/types/fetchPressReleasesApi';
 import { FetchPromotionsApiResponse } from '~/types/fetchPromotionsApi';
 import { ProjectApiResponse } from '~/types/ProjectApi';
+import { fetchImageProjectsByProjectId, deleteImageProject, createImageProjectBulk } from '~/api_helpers/fetchImageProjects';
 
 const normFile = (e: any) => {
   if (Array.isArray(e)) return e;
@@ -2375,6 +2376,7 @@ const PromotionAdminPage = () => {
 
 const ProjectAdminPage = () => {
   const [content, setContent] = useState('');
+  const [formType, setFormType] = useState<'Text' | '360'>('Text');
   const [form] = Form.useForm<{
     name: string;
     category: string;
@@ -2383,14 +2385,19 @@ const ProjectAdminPage = () => {
     priority: number;
     imageIds: string[];
     image: UploadProps['fileList'];
+    image360Ids?: string[];
+    image360ItemIds?: string[];
+    image360?: UploadProps['fileList'];
     location: string;
     date: Dayjs;
     content: string;
+    type: 'Text' | '360';
   }>();
   const [loading, setLoading] = useState(false);
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [projects, setProjects] = useState<ProjectApiResponse | null>(null);
   const [selectedProject, setSelectedProject] = useState<ProjectApiResponse['data'][number] | null>(null);
+  const [image360Items, setImage360Items] = useState<import('~/types/imageProjectApi').ImageProjectItem[] | null>(null);
   const [brands, setBrands] = useState<FetchBrandsApiResponse | null>(null);
   const [featuredOnly, setFeaturedOnly] = useState(false);
   const [pagination, setPagination] = useState({
@@ -2404,16 +2411,20 @@ const ProjectAdminPage = () => {
 
   const onClickCreate = () => {
     setContent(defaultHtmlContent);
+    setFormType('Text');
     form.setFieldsValue({
       content: defaultHtmlContent,
       imageIds: [],
+      image360Ids: [],
+      image360ItemIds: [],
+      type: 'Text',
     });
+    setImage360Items(null);
     setEditModalOpen(true);
   };
 
-  const onClickEdit = (project: ProjectApiResponse['data'][number]) => {
+  const onClickEdit = async (project: ProjectApiResponse['data'][number]) => {
     setSelectedProject(project);
-
     setContent(project.content);
 
     form.setFieldsValue({
@@ -2427,7 +2438,30 @@ const ProjectAdminPage = () => {
       location: project.location,
       date: dayjs(project.date),
       content: project.content,
+      type: project.type ?? 'Text',
     });
+
+    const projectType = project.type ?? 'Text';
+    setFormType(projectType);
+    if (projectType === '360') {
+      const items = await fetchImageProjectsByProjectId(project.id);
+      console.log('[ProjectAdmin] fetchImageProjects response:', JSON.stringify(items, null, 2));
+      console.log('[ProjectAdmin] fetchImageProjects data length:', items?.data?.length);
+      if (items?.data && items.data.length > 0) {
+        setImage360Items(items.data);
+        form.setFieldsValue({
+          image360: items.data.map((item) => ({ uid: item.id, name: item.image.name, url: resolveImageUrl(item.image.cdnUrl) })),
+          image360Ids: items.data.map((item) => item.imageId),
+          image360ItemIds: items.data.map((item) => item.id),
+        });
+      } else {
+        setImage360Items([]);
+        form.setFieldsValue({ image360: [], image360Ids: [], image360ItemIds: [] });
+      }
+    } else {
+      setImage360Items(null);
+      form.setFieldsValue({ image360: [], image360Ids: [], image360ItemIds: [] });
+    }
     setEditModalOpen(true);
   };
 
@@ -2442,11 +2476,16 @@ const ProjectAdminPage = () => {
 
     const formValues = form.getFieldsValue();
     delete formValues.image;
+    delete formValues.image360;
+    const image360Ids = formValues.image360Ids ?? [];
+    delete formValues.image360Ids;
+    delete formValues.image360ItemIds;
     const payload = {
       ..._.omit(formValues, 'date'),
       date: formValues.date ? dayjs(formValues.date).format('YYYY-MM-DD') : null,
       priority: formValues?.priority ?? 0,
       imageIds: formValues.imageIds ?? [],
+      type: formValues.type ?? 'Text',
     };
 
     let response;
@@ -2468,6 +2507,31 @@ const ProjectAdminPage = () => {
     if (response.success) {
       message.success(`${selectedProject ? 'Update' : 'Create'} project success!`);
       resetPagination();
+
+      if (formValues.type === '360') {
+        if (image360Ids.length) {
+          let projectId = selectedProject?.id;
+          if (!projectId) {
+            projectId = response.data?.id ?? response.id;
+          }
+          console.log('[ProjectAdmin] save 360 images:', JSON.stringify({ image360Ids, projectId, response }, null, 2));
+          if (projectId) {
+            const deleteOps = (selectedProject && image360Items ? image360Items : []).map((item) =>
+              deleteImageProject(item.id),
+            );
+            await Promise.all(deleteOps);
+
+            const bulkPayload = image360Ids.map((imageId: string) => ({ image: imageId, projectId }));
+            const bulkResult = await createImageProjectBulk(bulkPayload);
+            console.log('[ProjectAdmin] createImageProjectBulk result:', JSON.stringify(bulkResult, null, 2));
+            if (!bulkResult.success) {
+              message.error(`Gagal menyimpan gambar 360: ${bulkResult.message}`);
+            }
+          } else {
+            console.error('[ProjectAdmin] projectId is undefined after project save');
+          }
+        }
+      }
       onCancelEdit();
     } else message.error(`${selectedProject ? 'Update' : 'Create'} project failed: ${response?.message}`);
 
@@ -2607,6 +2671,8 @@ const ProjectAdminPage = () => {
           </Form.Item>
           <Form.Item name="priority" hidden></Form.Item>
           <Form.Item name="imageIds" hidden></Form.Item>
+          <Form.Item name="image360Ids" hidden></Form.Item>
+          <Form.Item name="image360ItemIds" hidden></Form.Item>
           <Form.Item
             name="image"
             label="Image"
@@ -2686,6 +2752,65 @@ const ProjectAdminPage = () => {
           <Form.Item name="date" label="Date" rules={[{ required: true }]}>
             <DatePicker />
           </Form.Item>
+          <Form.Item name="type" label="Type" initialValue="Text">
+            <Select
+              options={[{ label: 'Text', value: 'Text' }, { label: '360', value: '360' }]}
+              onChange={(value) => {
+                setFormType(value as 'Text' | '360');
+                form.setFieldValue('image360', []);
+                form.setFieldValue('image360Ids', []);
+                form.setFieldValue('image360ItemIds', []);
+              }}
+            />
+          </Form.Item>
+          {formType === '360' && (
+            <Form.Item
+              name="image360"
+              label="360° Image"
+              valuePropName="fileList"
+              getValueFromEvent={normFile}
+              rules={[{ required: true }]}
+            >
+              <Upload
+                name="file"
+                maxCount={10}
+                data={{ category: 'project_image' }}
+                headers={{ Authorization: getAPIKey() }}
+                action={`${process.env.API_HOST}/files`}
+                listType="picture-card"
+                onRemove={(file) => {
+                  if (file?.error) return;
+                  const currentItemIds = form.getFieldValue('image360ItemIds') ?? [];
+                  const currentImageIds = form.getFieldValue('image360Ids') ?? [];
+                  if (file?.response) {
+                    const removedUid = file.response.data.id;
+                    form.setFieldValue('image360ItemIds', currentItemIds.filter((id: string) => id !== removedUid));
+                    form.setFieldValue('image360Ids', currentImageIds.filter((id: string) => id !== removedUid));
+                  } else {
+                    form.setFieldValue('image360ItemIds', currentItemIds.filter((id: string) => id !== file.uid));
+                    form.setFieldValue('image360Ids', currentImageIds.filter((id: string) => id !== file.uid));
+                  }
+                }}
+                onChange={({ file, fileList }) => {
+                  if (file.status === 'done') {
+                    const newItemImageIds = fileList.map((f) => (f?.response ? f.response.data.id : '')).filter(Boolean);
+                    const newItemItemIds = fileList.map((f) => f?.response?.data?.id ?? f.uid);
+                    form.setFieldValue('image360Ids', newItemImageIds);
+                    form.setFieldValue('image360ItemIds', newItemItemIds.filter(Boolean));
+                  }
+                  if (file.status === 'error') {
+                    if (typeof file.response === 'string') {
+                      message.error({ content: <div dangerouslySetInnerHTML={{ __html: file.response }} /> });
+                    } else {
+                      message.error(`Upload failed: ${file.response.message}`);
+                    }
+                  }
+                }}
+              >
+                +
+              </Upload>
+            </Form.Item>
+          )}
         </Form>
       </Modal>
     </>
