@@ -1,6 +1,6 @@
 info project
-untul backend ini projectnya htdoc/tla-main
-untuk fronent projecnya di htdoc/tla-fe
+untul backend ini projectnya htdoc/tla-backend-side
+untuk fronent projecnya di htdoc/tla-frontend-sides
 
 list task
 
@@ -65,3 +65,8 @@ info project
 untul backend ini projectnya htdoc/tla-main
 untuk fronent projecnya di htdoc/tla-fe
 
+
+
+brand/casa-italia(Semantic Label)
+
+untuk gambarnya perbaiki agar tampil dihalaman ini

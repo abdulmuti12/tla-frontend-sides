@@ -1119,7 +1119,7 @@ const BrandsAdminPage = () => {
         coverImage: subBrand.coverImage ? [{ url: resolveImageUrl(subBrand.coverImage.cdnUrl), uid: subBrand.coverImage.id, name: subBrand.coverImage.name }] : [],
         coverImageId: subBrand.coverImage?.id,
         logo: subBrand.logo ? [{ url: resolveImageUrl(subBrand.logo.cdnUrl), uid: subBrand.logo.id, name: subBrand.logo.name }] : [],
-        logoId: subBrand.logo.id,
+        logoId: subBrand.logo?.id,
         shortDescription: subBrand.shortDescription,
       })),
     });
