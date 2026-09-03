@@ -38,17 +38,19 @@ export async function fetchProjects({
   limit = 10,
   page = 1,
   brandId,
+  status,
 }: {
   limit: number;
   page: number;
   brandId?: string;
+  status?: string;
 }): Promise<ProjectApiResponse | null> {
   try {
     let response;
     if (brandId && brandId !== 'all') {
-      response = await fetch(`${process.env.API_HOST}/projects/brands/${brandId}?limit=${limit}&page=${page}`);
+      response = await fetch(`${process.env.API_HOST}/projects/brands/${brandId}?limit=${limit}&page=${page}${status ? `&status=${status}` : ''}`);
     } else {
-      response = await fetch(`${process.env.API_HOST}/projects?limit=${limit}&page=${page}`);
+      response = await fetch(`${process.env.API_HOST}/projects?limit=${limit}&page=${page}${status ? `&status=${status}` : ''}`);
     }
     const raw = await response.json();
     return wrap(raw, page, limit);

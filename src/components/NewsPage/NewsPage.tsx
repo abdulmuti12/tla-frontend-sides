@@ -97,6 +97,7 @@ export default function NewsPage() {
           limit: pageMeta.limit,
           page: pageMeta.page,
           brandId: selectedBrandId,
+          status: 'active',
         }).then((data) => {
           setProjects(data?.data || []);
           setPageMeta(
@@ -152,6 +153,7 @@ export default function NewsPage() {
     fetchProjects({
       limit: 10,
       page: 1,
+      status: 'active',
     }).then((data) => {
       setProjects(data?.data || []);
     });
