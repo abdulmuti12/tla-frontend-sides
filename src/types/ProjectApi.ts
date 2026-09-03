@@ -13,6 +13,8 @@ export interface ProjectApiResponse {
     location: string;
     date: string;
     content: string;
+    status?: string;
+    typePost?: string;
     createdAt: string;
     updatedAt: string;
     id: string;

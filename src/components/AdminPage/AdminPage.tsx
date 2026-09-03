@@ -2386,6 +2386,8 @@ const ProjectAdminPage = () => {
     location: string;
     date: Dayjs;
     content: string;
+    status: string;
+    typePost: string;
   }>();
   const [loading, setLoading] = useState(false);
   const [editModalOpen, setEditModalOpen] = useState(false);
@@ -2427,6 +2429,8 @@ const ProjectAdminPage = () => {
       location: project.location,
       date: dayjs(project.date),
       content: project.content,
+      status: project.status ?? 'active',
+      typePost: project.typePost ?? 'text',
     });
     setEditModalOpen(true);
   };
@@ -2447,6 +2451,8 @@ const ProjectAdminPage = () => {
       date: formValues.date ? dayjs(formValues.date).format('YYYY-MM-DD') : null,
       priority: formValues?.priority ?? 0,
       imageIds: formValues.imageIds ?? [],
+      status: formValues.status ?? 'active',
+      typePost: formValues.typePost ?? 'text',
     };
 
     let response;
@@ -2519,6 +2525,26 @@ const ProjectAdminPage = () => {
       key: 'isFeatured',
       width: 60,
       render: (_, record) => (record.isFeatured ? 'Yes' : 'No'),
+    },
+    {
+      title: 'Status',
+      dataIndex: 'status',
+      key: 'status',
+      width: 100,
+      render: (_, record) => (
+        <span className={`px-2 py-1 rounded text-xs ${
+          record.status === 'active' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'
+        }`}>
+          {record.status ?? '-'}
+        </span>
+      ),
+    },
+    {
+      title: 'Type Post',
+      dataIndex: 'typePost',
+      key: 'typePost',
+      width: 100,
+      render: (_, record) => record.typePost ?? '-',
     },
     {
       key: 'actions',
@@ -2601,6 +2627,18 @@ const ProjectAdminPage = () => {
           </Form.Item>
           <Form.Item name="category" label="Category" rules={[{ required: true }]}>
             <Input />
+          </Form.Item>
+          <Form.Item name="status" label="Status" initialValue="active">
+            <Select options={[
+              { label: 'Active', value: 'active' },
+              { label: 'Inactive', value: 'inactive' },
+            ]} />
+          </Form.Item>
+          <Form.Item name="typePost" label="Type Post" initialValue="text">
+            <Select options={[
+              { label: 'Text', value: 'text' },
+              { label: '360', value: '360' },
+            ]} />
           </Form.Item>
           <Form.Item name="isFeatured" label="Featured" valuePropName="checked">
             <Switch />
