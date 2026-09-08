@@ -29,3 +29,15 @@ pnpm-debug.log*
 
 # TypeScript
 *.tsbuildinfo
+
+# Uploaded media & data files
+uploads/
+media/
+public/assets/**
+!public/assets/.gitkeep
+
+# Project screenshots & exports
+*.txt
+*.png
+!LICENSE
+!README.md
