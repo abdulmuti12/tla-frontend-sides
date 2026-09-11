@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+@import '~@photo-sphere-viewer/core/index.css';
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
