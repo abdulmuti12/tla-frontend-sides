@@ -133,7 +133,6 @@ export default function PanoramaViewer({ scenes }: Props) {
           width="100%"
           navbar={['autorotate', 'fullscreen']}
           plugins={[MarkersPlugin]}
-          style={{ flex: 1 }}
         />
         {loading && !error && (
           <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#1a1a2e', zIndex: 25 }}>
