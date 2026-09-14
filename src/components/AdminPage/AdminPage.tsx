@@ -2388,6 +2388,7 @@ const ProjectAdminPage = () => {
     content: string;
     status: string;
     typePost: string;
+    url: string;
   }>();
   const [loading, setLoading] = useState(false);
   const [editModalOpen, setEditModalOpen] = useState(false);
@@ -2431,6 +2432,7 @@ const ProjectAdminPage = () => {
       content: project.content,
       status: project.status ?? 'active',
       typePost: project.typePost ?? 'text',
+      url: project.url ?? '',
     });
     setEditModalOpen(true);
   };
@@ -2453,6 +2455,7 @@ const ProjectAdminPage = () => {
       imageIds: formValues.imageIds ?? [],
       status: formValues.status ?? 'active',
       typePost: formValues.typePost ?? 'text',
+      url: formValues.url ?? null,
     };
 
     let response;
@@ -2635,10 +2638,26 @@ const ProjectAdminPage = () => {
             ]} />
           </Form.Item>
           <Form.Item name="typePost" label="Type Post" initialValue="text">
-            <Select options={[
-              { label: 'Text', value: 'text' },
-              { label: '360', value: '360' },
-            ]} />
+            <Select
+              options={[
+                { label: 'Text', value: 'text' },
+                { label: '360', value: '360' },
+              ]}
+              onChange={(value) => {
+                if (value !== '360') {
+                  form.setFieldValue('url', '');
+                }
+              }}
+            />
+          </Form.Item>
+          <Form.Item
+            name="url"
+            label="360 URL"
+            extra="Masukkan URL panorama 360 (contoh: /panorama/jands)"
+            rules={[{ required: true, message: 'URL wajib diisi untuk Type Post 360' }]}
+            hidden={form.getFieldValue('typePost') !== '360'}
+          >
+            <Input placeholder="/panorama/jands" />
           </Form.Item>
           <Form.Item name="isFeatured" label="Featured" valuePropName="checked">
             <Switch />

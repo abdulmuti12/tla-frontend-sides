@@ -306,7 +306,13 @@ export default function NewsPage() {
                 <div
                   key={index}
                   className="flex cursor-pointer flex-col gap-4"
-                  onClick={() => router.push(`/project/${project.id}`)}
+                  onClick={() => {
+                    if (project.typePost === '360' && project.url) {
+                      window.location.href = project.url;
+                    } else {
+                      router.push(`/project/${project.id}`);
+                    }
+                  }}
                 >
                   <div className="w-full overflow-hidden">
                     <img

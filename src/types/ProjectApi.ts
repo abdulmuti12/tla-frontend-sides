@@ -15,6 +15,7 @@ export interface ProjectApiResponse {
     content: string;
     status?: string;
     typePost?: string;
+    url?: string;
     createdAt: string;
     updatedAt: string;
     id: string;
