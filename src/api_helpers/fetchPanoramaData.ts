@@ -1,9 +1,17 @@
+export interface PanoramaConnection {
+  targetId: string;
+  yaw: number;
+  pitch: number;
+  label: string;
+}
+
 export interface PanoramaItem {
   id: string;
   name: string;
-  url: string;         // default URL (desktop优先)
-  desktopUrl: string;  // always desktop
-  mobileUrl: string;   // always mobile
+  url: string;
+  desktopUrl: string;
+  mobileUrl: string;
+  connections: PanoramaConnection[];
 }
 
 export async function fetchPanoramaData(): Promise<PanoramaItem[]> {
