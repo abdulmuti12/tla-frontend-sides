@@ -31,7 +31,7 @@ const ROOM_NAMES: Record<string, string> = {
   'IMG_20181006_214950_00_019': 'Patio',
   'IMG_20181006_215043_00_020': 'Garden',
   'IMG_20181006_215350_00_021': 'Office',
-  'IMG_20181006_231323_00_022': 'Laundry',
+  'IMG_20181006_231323_00_022': 'Mini Bar',
 };
 
 // Define connections between rooms: yaw (horizontal angle) and pitch (vertical angle)
@@ -71,10 +71,10 @@ const CONNECTIONS: Record<string, Array<{ targetId: string; yaw: number; pitch: 
     { targetId: 'IMG_20181006_214950_00_019', yaw: -Math.PI / 2, pitch: Math.PI / 6, label: '← Patio' },
   ],
   'IMG_20181006_215350_00_021': [
-    { targetId: 'IMG_20181006_231323_00_022', yaw: Math.PI, pitch: 0, label: 'Laundry →' },
+    { targetId: 'IMG_20181006_231323_00_022', yaw: Math.PI, pitch: 0, label: 'Mini Bar →' },
   ],
   'IMG_20181006_231323_00_022': [
-    { targetId: 'IMG_20181006_215350_00_021', yaw: 0, pitch: 0, label: '← Office' },
+    { targetId: 'IMG_20181006_215350_00_021', yaw: 0, pitch: 0, label: '← ' },
   ],
 };
 

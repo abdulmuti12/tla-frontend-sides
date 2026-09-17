@@ -1,11 +1,14 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useId } from 'react';
+import { createPortal } from 'react-dom';
 import { ReactPhotoSphereViewer as PhotoSphereViewer } from 'react-photo-sphere-viewer';
 import { MarkersPlugin } from '@photo-sphere-viewer/markers-plugin';
 import { PanoramaItem, PanoramaConnection } from '~/api_helpers/fetchPanoramaData';
 
 const MOBILE_BREAKPOINT = 768;
+
+const LOREM_CONTENT = `<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p><p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p><p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>`;
 
 interface Props {
   scenes: PanoramaItem[];
@@ -15,24 +18,23 @@ export default function PanoramaViewer({ scenes }: Props) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [showSidebar, setShowSidebar] = useState(true);
+  const [infoModalOpen, setInfoModalOpen] = useState(false);
   const isMobile = useRef(false);
   const viewerRef = useRef<any>(null);
   const markersRef = useRef<Set<string>>(new Set());
+  const modalId = useId();
 
   useEffect(() => {
     isMobile.current = window.innerWidth < MOBILE_BREAKPOINT;
-    const handleResize = () => {
-      const mobile = window.innerWidth < MOBILE_BREAKPOINT;
-      if (mobile !== isMobile.current) {
-        isMobile.current = mobile;
-        setShowSidebar(!mobile);
-        setLoading(true);
-      }
-    };
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    setLoading(true);
   }, []);
+
+  useEffect(() => {
+    if (!infoModalOpen) return;
+    const handleKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setInfoModalOpen(false); };
+    document.addEventListener('keydown', handleKey);
+    return () => document.removeEventListener('keydown', handleKey);
+  }, [infoModalOpen]);
 
   const currentScene = scenes[currentIndex] ?? scenes[0];
   const imageUrl = isMobile.current ? currentScene?.mobileUrl : currentScene?.desktopUrl;
@@ -54,11 +56,9 @@ export default function PanoramaViewer({ scenes }: Props) {
     const markersPlugin = viewer.getPlugin(MarkersPlugin);
     if (!markersPlugin) return;
 
-    // Clear existing markers
     markersRef.current.forEach((id) => markersPlugin.removeMarker(id));
     markersRef.current.clear();
 
-    // Add new markers for connections
     currentScene.connections.forEach((conn: PanoramaConnection) => {
       const markerId = `conn-${conn.targetId}`;
       markersPlugin.addMarker({
@@ -72,7 +72,6 @@ export default function PanoramaViewer({ scenes }: Props) {
       markersRef.current.add(markerId);
     });
 
-    // Handle marker clicks
     markersPlugin.addEventListener('select-marker', (e: any) => {
       const markerId = e.marker?.id;
       if (!markerId?.startsWith('conn-')) return;
@@ -106,7 +105,6 @@ export default function PanoramaViewer({ scenes }: Props) {
     setLoading(true);
     setError(null);
     setCurrentIndex(index);
-    if (isMobile.current) setShowSidebar(false);
   };
 
   if (!scenes || scenes.length === 0) {
@@ -118,9 +116,9 @@ export default function PanoramaViewer({ scenes }: Props) {
   }
 
   return (
-    <div style={{ background: '#1a1a2e', height: '100vh', display: 'flex', overflow: 'hidden' }}>
+    <div style={{ background: '#1a1a2e', height: '100vh', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
       {/* Main Viewer */}
-      <div style={{ flex: 1, position: 'relative', display: 'flex', flexDirection: 'column' }}>
+      <div style={{ flex: 1, position: 'relative', overflow: 'hidden' }}>
         {error && (
           <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(0,0,0,0.8)', color: '#e94560', zIndex: 30, fontSize: 14 }}>
             {error}
@@ -144,111 +142,133 @@ export default function PanoramaViewer({ scenes }: Props) {
           </div>
         )}
 
-        {/* Current Room Label */}
-        <div style={{ position: 'absolute', top: 16, left: 16, background: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(10px)', padding: '8px 16px', borderRadius: 8, color: '#fff', fontSize: 14, zIndex: 20, border: '1px solid rgba(255,255,255,0.1)' }}>
-          {currentScene?.name}
-        </div>
-
-        {/* Toggle Sidebar Button (Mobile) */}
-        {isMobile.current && showSidebar && (
-          <button
-            onClick={() => setShowSidebar(false)}
-            style={{ position: 'absolute', top: 16, right: 16, background: 'rgba(0,0,0,0.6)', border: 'none', borderRadius: 8, color: '#fff', padding: '8px 12px', cursor: 'pointer', zIndex: 20, fontSize: 12 }}
-          >
-            ✕ Tutup
-          </button>
-        )}
-      </div>
-
-      {/* Sidebar - Room Navigation */}
-      {scenes.length > 1 && (
-        <div style={{
-          width: showSidebar ? '280px' : '0px',
-          minWidth: showSidebar ? '280px' : '0px',
-          background: 'rgba(10,10,20,0.95)',
-          borderLeft: '1px solid rgba(255,255,255,0.1)',
-          overflow: 'hidden',
-          transition: 'all 0.3s ease',
-          display: 'flex',
-          flexDirection: 'column',
-        }}>
-          {/* Sidebar Header */}
-          <div style={{ padding: '20px 16px', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
-            <h3 style={{ color: '#fff', margin: 0, fontSize: 16 }}>Navigasi Ruangan</h3>
-            <p style={{ color: '#999', margin: '4px 0 0', fontSize: 12 }}>Pilih ruangan untuk dikunjungi</p>
-          </div>
-
-          {/* Room List */}
-          <div style={{ flex: 1, overflowY: 'auto', padding: '12px' }}>
-            {scenes.map((scene, idx) => (
-              <button
-                key={scene.id}
-                onClick={() => switchScene(idx)}
-                style={{
-                  width: '100%',
-                  padding: '12px 16px',
-                  marginBottom: 8,
-                  border: 'none',
-                  borderRadius: 8,
-                  background: idx === currentIndex ? '#e94560' : 'rgba(255,255,255,0.08)',
-                  color: idx === currentIndex ? '#fff' : '#ccc',
-                  cursor: 'pointer',
-                  fontSize: 14,
-                  textAlign: 'left',
-                  transition: 'all 0.2s',
-                  borderLeft: idx === currentIndex ? '3px solid #e94560' : '3px solid transparent',
-                }}
-                onMouseEnter={(e) => {
-                  if (idx !== currentIndex) {
-                    e.currentTarget.style.background = 'rgba(255,255,255,0.15)';
-                    e.currentTarget.style.color = '#fff';
-                  }
-                }}
-                onMouseLeave={(e) => {
-                  if (idx !== currentIndex) {
-                    e.currentTarget.style.background = 'rgba(255,255,255,0.08)';
-                    e.currentTarget.style.color = '#ccc';
-                  }
-                }}
-              >
-                <div style={{ fontWeight: 500 }}>{scene.name}</div>
-                {scene.connections.length > 0 && (
-                  <div style={{ fontSize: 11, color: '#888', marginTop: 2 }}>
-                    {scene.connections.map(c => c.label).join(' · ')}
-                  </div>
-                )}
-              </button>
-            ))}
-          </div>
-
-          {/* Sidebar Footer */}
-          <div style={{ padding: '12px 16px', borderTop: '1px solid rgba(255,255,255,0.1)', fontSize: 11, color: '#666' }}>
-            Klik hotspot di panorama untuk berpindah ruangan
-          </div>
-        </div>
-      )}
-
-      {/* Toggle Sidebar Button (Desktop) */}
-      {!isMobile.current && scenes.length > 1 && (
+        {/* Information Project Button */}
         <button
-          onClick={() => setShowSidebar(!showSidebar)}
+          onClick={() => setInfoModalOpen(true)}
           style={{
             position: 'absolute',
             top: 16,
-            right: showSidebar ? '296px' : 16,
+            left: '50%',
+            transform: 'translateX(-50%)',
             background: 'rgba(0,0,0,0.6)',
-            border: 'none',
-            borderRadius: 8,
+            backdropFilter: 'blur(10px)',
+            padding: '6px 12px',
+            borderRadius: 6,
             color: '#fff',
-            padding: '8px 12px',
-            cursor: 'pointer',
-            zIndex: 20,
             fontSize: 12,
-            transition: 'right 0.3s ease',
+            fontWeight: 500,
+            zIndex: 20,
+            border: '1px solid rgba(255,255,255,0.15)',
+            cursor: 'pointer',
+            transition: 'background 0.2s',
+            whiteSpace: 'nowrap',
           }}
+          onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(233,69,96,0.7)'; }}
+          onMouseLeave={(e) => { e.currentTarget.style.background = 'rgba(0,0,0,0.6)'; }}
         >
-          {showSidebar ? '← Tutup Panel' : '▶ Panel Ruangan'}
+          Information Project
         </button>
+      </div>
+
+      {/* Bottom Room Navigation */}
+      <div style={{
+        background: 'rgba(10,10,20,0.95)',
+        borderTop: '1px solid rgba(255,255,255,0.1)',
+        padding: '12px 16px',
+        display: 'flex',
+        gap: 8,
+        overflowX: 'auto',
+        flexShrink: 0,
+        justifyContent: 'center',
+        flexWrap: 'wrap',
+      }}>
+        {scenes.map((scene, idx) => (
+          <button
+            key={scene.id}
+            onClick={() => switchScene(idx)}
+            style={{
+              padding: '6px 14px',
+              borderRadius: 6,
+              border: 'none',
+              background: idx === currentIndex ? '#e94560' : 'rgba(255,255,255,0.08)',
+              color: idx === currentIndex ? '#fff' : '#aaa',
+              cursor: 'pointer',
+              fontSize: 12,
+              fontWeight: 500,
+              whiteSpace: 'nowrap',
+              transition: 'all 0.2s',
+              flexShrink: 0,
+            }}
+            onMouseEnter={(e) => {
+              if (idx !== currentIndex) {
+                e.currentTarget.style.background = 'rgba(255,255,255,0.15)';
+                e.currentTarget.style.color = '#fff';
+              }
+            }}
+            onMouseLeave={(e) => {
+              if (idx !== currentIndex) {
+                e.currentTarget.style.background = 'rgba(255,255,255,0.08)';
+                e.currentTarget.style.color = '#aaa';
+              }
+            }}
+          >
+            {scene.name}
+          </button>
+        ))}
+      </div>
+
+      {/* Project Information Modal Overlay */}
+      {infoModalOpen && createPortal(
+        <div
+          id={modalId}
+          role="dialog"
+          aria-modal="true"
+          style={{
+            position: 'fixed',
+            inset: 0,
+            zIndex: 10000,
+            background: 'rgba(0,0,0,0.7)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: 20,
+          }}
+          onClick={() => setInfoModalOpen(false)}
+        >
+          <div
+            style={{
+              background: '#fff',
+              borderRadius: 12,
+              width: '100%',
+              maxWidth: 640,
+              maxHeight: '80vh',
+              overflow: 'hidden',
+              display: 'flex',
+              flexDirection: 'column',
+              boxShadow: '0 20px 60px rgba(0,0,0,0.4)',
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div style={{ padding: '16px 20px', borderBottom: '1px solid #eee', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <span style={{ fontSize: 16, fontWeight: 600 }}>Informasi Project</span>
+              <button
+                onClick={() => setInfoModalOpen(false)}
+                style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: 22, color: '#999', lineHeight: 1, padding: '4px 8px', borderRadius: 4 }}
+                onMouseEnter={(e) => { e.currentTarget.style.background = '#f5f5f5'; }}
+                onMouseLeave={(e) => { e.currentTarget.style.background = 'none'; }}
+              >
+                ×
+              </button>
+            </div>
+            <div style={{ padding: '20px', overflowY: 'auto', flex: 1 }}>
+              <div
+                style={{ color: '#333', lineHeight: 1.7, fontSize: 14 }}
+                dangerouslySetInnerHTML={{ __html: LOREM_CONTENT }}
+              />
+            </div>
+          </div>
+        </div>,
+        document.body
       )}
     </div>
   );
